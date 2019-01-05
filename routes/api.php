@@ -8,4 +8,8 @@ Route::post('login', 'UserController@login');
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('register', 'UserController@register');
 
+    Route::resource('promotions', 'PromotionController');
 });
+
+// Sem necessidade de estar logado
+Route::get('promotions/search', 'PromotionController@search');
