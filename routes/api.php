@@ -8,9 +8,10 @@ Route::post('login', 'UserController@login');
 Route::get('promotions/search', 'PromotionController@search');
 
 // Todas as rotas devem estar aqui
-Route::group(['middleware' => 'auth:api'], function(){
+// Route::group(['middleware' => 'auth:api'], function(){
     Route::post('register', 'UserController@register');
 
     Route::resource('promotions', 'PromotionController');
     Route::post('promotions/{id}/like', 'PromotionController@upLike');
-});
+    Route::resource('coupons', 'CouponController');
+// });
