@@ -21,8 +21,6 @@ class CreatePromotions extends Migration
             $table->integer('user_id');
             $table->integer('product_id');
             $table->integer('like')->nullable();
-            $table->integer('status');
-            $table->integer('zip_code');
             $table->date('start');
             $table->date('end');
             $table->softDeletes();

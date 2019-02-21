@@ -22,9 +22,7 @@ class Promotion extends Model
         'user_id',
         'product_id',
         'like',
-        'status',
         'start',
-        'zip_code',
         'end'
     ];
 
