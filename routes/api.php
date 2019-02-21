@@ -15,5 +15,6 @@ Route::resource('products', 'ProductController');
 Route::resource('promotions', 'PromotionController');
 Route::resource('coupons', 'CouponController');
 Route::post('promotions/{id}/like', 'PromotionController@upLike');
+Route::post('promotions/{id}/report', 'PromotionController@report');
 // });
 

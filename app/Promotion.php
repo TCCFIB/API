@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\User;
 use App\Product;
+use App\PromotionReport;
 
 class Promotion extends Model
 {
@@ -23,6 +24,7 @@ class Promotion extends Model
         'like',
         'status',
         'start',
+        'zip_code',
         'end'
     ];
 
@@ -36,6 +38,11 @@ class Promotion extends Model
     public function products()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function promotionReports()
+    {
+        return $this->belongsTo(PromotionReport::class, 'promotion_id', 'id');
     }
 
     public function scopeSearch($query, Request $request) 
@@ -54,6 +61,10 @@ class Promotion extends Model
 
         if ($request->has('location')) {
             $query->where('location', 'LIKE', '%'.strtolower($request->input('location')).'%');
+        }
+
+        if ($request->has('zip_code')) {
+            $query->where('zip_code', 'LIKE', '%'.strtolower($request->input('zip_code')).'%');
         }
 
         if ($request->has('limit') && !empty($request->input('limit'))) {
