@@ -75,6 +75,20 @@ class PromotionController extends Controller
             return $this->clientErrorResponse($data);
         }
     }
+    public function downLike(Request $request, $id)
+    {
+        $v = \Validator::make($request->all(), $this->validationPatchRules);
+        try {
+            $promotion = Promotion::find($id);
+            $promotion->like--;
+            $promotion->save();
+
+            return $this->showResponse($promotion);
+        } catch (\Exception $ex) {
+            $data = ['form_validations' => $v->errors(), 'exception' => $ex->getMessage()];
+            return $this->clientErrorResponse($data);
+        }
+    }
 
     public function report(Request $request, $id)
     {
