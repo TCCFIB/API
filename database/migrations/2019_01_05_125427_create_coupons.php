@@ -17,6 +17,9 @@ class CreateCoupons extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
+            $table->string('location');
+            $table->date('start');
+            $table->date('end');
             $table->softDeletes();
             $table->timestamps();
         });

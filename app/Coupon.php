@@ -14,7 +14,10 @@ class Coupon extends Model
     
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'location',
+        'start',
+        'end'
     ];
 
     public $timestamps = true;
