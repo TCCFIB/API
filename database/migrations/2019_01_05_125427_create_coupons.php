@@ -16,10 +16,10 @@ class CreateCoupons extends Migration
         Schema::create('coupons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
-            $table->string('location');
-            $table->date('start');
-            $table->date('end');
+            $table->string('description')->nullable();
+            $table->string('location')->nullable();
+            $table->date('start')->nullable();
+            $table->date('end')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

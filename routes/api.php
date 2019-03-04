@@ -11,6 +11,7 @@ Route::get('promotions/search', 'PromotionController@search');
 // Todas as rotas devem estar aqui
 // Route::group(['middleware' => 'auth:api'], function(){
 Route::post('register', 'UserController@register');
+Route::resource('user', 'UserController');
 Route::resource('products', 'ProductController');
 Route::resource('promotions', 'PromotionController');
 Route::resource('coupons', 'CouponController');

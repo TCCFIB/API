@@ -87,6 +87,7 @@ class UserController extends Controller
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken; 
         $success['name'] = $user->name;
+        $success['id'] = $user->id;
         return $this->listResponse($success);
     }
 
