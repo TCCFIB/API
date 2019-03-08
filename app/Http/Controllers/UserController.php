@@ -46,7 +46,7 @@ class UserController extends Controller
         return $this->listResponse($data, $totalData);
     }
 
-    /** 
+    /**
      * login api 
      * 
      * @return \Illuminate\Http\Response 
@@ -64,7 +64,7 @@ class UserController extends Controller
         }
     }
     
-    /** 
+    /**
      * Register api 
      * 
      * @return \Illuminate\Http\Response 

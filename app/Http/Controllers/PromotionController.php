@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Traits\RestControllerTrait;
 use App\Promotion;
+use App\PromotionLike;
+
 use App\PromotionReport;
 use DB;
 
@@ -42,7 +44,7 @@ class PromotionController extends Controller
                     ->offset($request->input('offset'))
                     ->get();
         } else {
-            $data = Promotion::with('products')->get();
+            $data = Promotion::with('products', 'users')->get();
         }
         
         return $this->listResponse($data, $totalData);
@@ -65,11 +67,18 @@ class PromotionController extends Controller
     {
         $v = \Validator::make($request->all(), $this->validationPatchRules);
         try {
-            $promotion = Promotion::find($id);
-            $promotion->like++;
-            $promotion->save();
+            $promotionLike = PromotionLike::where('promotion_id', $id)->where('user_id', $request->input('user_id'))->get();
+            if (count($promotionLike) < 1) {
 
-            return $this->showResponse($promotion);
+                $promotion = Promotion::find($id);
+                $promotion->like++;
+                $promotion->save();
+                $promotionLike = PromotionLike::create($request->all());
+            }
+
+            $data = Promotion::where('id', $id)->with('promotionLike')->get();
+
+            return $this->showResponse($data);
         } catch (\Exception $ex) {
             $data = ['form_validations' => $v->errors(), 'exception' => $ex->getMessage()];
             return $this->clientErrorResponse($data);

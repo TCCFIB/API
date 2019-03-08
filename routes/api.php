@@ -19,4 +19,3 @@ Route::post('promotions/{id}/like', 'PromotionController@upLike');
 Route::post('promotions/{id}/unlike', 'PromotionController@downLike');
 Route::post('promotions/{id}/report', 'PromotionController@report');
 // });
-

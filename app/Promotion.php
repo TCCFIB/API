@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Product;
 use App\PromotionReport;
+use App\PromotionLike;
 
 class Promotion extends Model
 {
@@ -36,6 +37,11 @@ class Promotion extends Model
     public function products()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function promotionLike()
+    {
+        return $this->belongsTo(PromotionLike::class, 'promotion_id', 'id');
     }
 
     public function promotionReports()
