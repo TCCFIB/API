@@ -44,10 +44,20 @@ class PromotionController extends Controller
                     ->offset($request->input('offset'))
                     ->get();
         } else {
-            $data = Promotion::with('products', 'users')->get();
+            $promotions = Promotion::with('products', 'users')->get();
+            $data = $this->runningPromotion($promotions);
         }
         
         return $this->listResponse($data, $totalData);
+    }
+
+    public function runningPromotion($promotions)
+    {
+        foreach ($promotions as $key => $promotion) {
+            $promotion['likes'] = $this->getAllLikesByPromotion($promotion['id']);
+        }
+
+        return $promotions;
     }
 
     /**
@@ -69,21 +79,32 @@ class PromotionController extends Controller
         try {
             $promotionLike = PromotionLike::where('promotion_id', $id)->where('user_id', $request->input('user_id'))->get();
             if (count($promotionLike) < 1) {
-
                 $promotion = Promotion::find($id);
                 $promotion->like++;
                 $promotion->save();
                 $promotionLike = PromotionLike::create($request->all());
             }
-
-            $data = Promotion::where('id', $id)->with('promotionLike')->get();
-
-            return $this->showResponse($data);
+            $likes = $this->getAllLikesByPromotion($id);
+            $data = Promotion::where('id', $id)->get();
+            $dataReturn = $data[0];
+            $dataReturn['likes'] = $likes;
+            return $this->showResponse($dataReturn);
         } catch (\Exception $ex) {
             $data = ['form_validations' => $v->errors(), 'exception' => $ex->getMessage()];
             return $this->clientErrorResponse($data);
         }
     }
+
+    public function getAllLikesByPromotion($promotionId)
+    {
+        $likesByPromotion = PromotionLike::select('user_id')->where('promotion_id', $promotionId)->get();
+        if ($likesByPromotion) {
+            return $likesByPromotion;
+        }
+        
+        return [];
+    }
+
     public function downLike(Request $request, $id)
     {
         $v = \Validator::make($request->all(), $this->validationPatchRules);
