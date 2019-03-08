@@ -15,7 +15,7 @@ class CreatePromotionReport extends Migration
     {
         Schema::create('promotion_report', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product_id');
+            $table->integer('promotion_id');
             $table->integer('user_id');
             $table->string('comment');
             $table->timestamps();

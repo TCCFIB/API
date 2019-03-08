@@ -16,6 +16,7 @@ class CreateProducts extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('image');
             $table->string('description')->nullable();
             $table->boolean('prescription')->nullable();
             $table->softDeletes();

@@ -41,7 +41,7 @@ class Promotion extends Model
 
     public function promotionLike()
     {
-        return $this->belongsTo(PromotionLike::class, 'promotion_id', 'id');
+        return $this->belongsTo(PromotionLike::class, 'id', 'promotion_id');
     }
 
     public function promotionReports()

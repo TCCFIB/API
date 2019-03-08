@@ -104,11 +104,11 @@ class PromotionController extends Controller
         $v = \Validator::make($request->all(), $this->validationPatchRules);
         try {
             $promotion = Promotion::find($id);
-            $bodyReport = null;
+            $bodyReport = new PromotionReport();
             $bodyReport->comment = $request->input('comment');
             $bodyReport->user_id = $request->input('user_id');
             $bodyReport->promotion_id = $promotion->id;
-            $data = PromotionReport::create($bodyReport);
+            $bodyReport->save();
 
             return $this->showResponse($promotion);
         } catch (\Exception $ex) {
